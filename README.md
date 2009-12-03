@@ -1,0 +1,1 @@
+This is a JSGI adapter for node.js.
