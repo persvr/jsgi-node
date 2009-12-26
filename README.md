@@ -19,7 +19,7 @@ asynchronous support. For example:
     require("jsgi-node").start(function(request){
       var promise = new process.Promise();
       posix.cat("jsgi-node.js").addCallback(function(body){
-         promise.emitSuccess({
+        promise.emitSuccess({
 	       status: 200,
 		   headers: {},
 		   body: [body]
