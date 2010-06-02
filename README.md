@@ -4,7 +4,7 @@ To use, provide a JSGI application (can be application stack) to the start
 function:
 
     require("jsgi-node").start(function(request){
-      return request.input.join().then(function(requestBody){
+      return request.body.join().then(function(requestBody){
         return {
           status:200,
           headers:{},
