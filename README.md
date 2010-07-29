@@ -16,7 +16,7 @@ function:
 This adapter should conform to the JSGI 0.3 (with promises) for full 
 asynchronous support. For example:
 
-    var fs = require("fs-promise");
+    var fs = require("promised-io/fs");
     require("jsgi-node").start(function(request){
       return fs.readFile("jsgi-node.js").then(function(body){
         return {
@@ -28,4 +28,30 @@ asynchronous support. For example:
     });
 
 
-Hopefully, the Node API will eventually be standardized through CommonJS as the HTTP Event Interface, at which point it would make sense to rename this to hei-jsgi or something like that, to use a standard adapter for any server that implements the API.
+File objects returned from promised-io's fs can be directly provided as body for 
+automated streaming of data to the client from the filesystem:
+
+    var fs = require("promised-io/fs");
+    require("jsgi-node").start(function(request){
+      return {
+        status: 200,
+        headers: {},
+        body: fs.open("some-file.txt","r")
+      };
+    });
+
+This package also includes an adapter for running Node HTTP apps on top of JSGI middleware:
+
+    var fs = require("promised-io/fs"),
+        Node = require("jsgi/node").Node;
+    require("jsgi-node").start(
+      SomeJSGIMiddleWare(
+        OtherJSGIMiddleWare(
+          Node(function(request, response){
+           // request and response conform to Node's HTTP API
+          })
+        )
+      )
+    );
+
+ 
