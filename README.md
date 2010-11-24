@@ -1,4 +1,9 @@
-JSGI 0.3 Adapter for Node
+# JSGI 0.3 Adapter for Node
+
+JSGI-Node provides an interface for running middleware [JSGI](http://wiki.commonjs.org/wiki/JSGI/Level0/A/Draft2) on Node.
+JSGI is an asynchronous middleware interface based on solid mature middleware design
+principles, and the asynchronous design fits perfectly with Node. JSGI uses idiomatic JavaScript,
+leveraging closures for [simple and fast](http://www.sitepen.com/blog/2010/06/11/jsgi-vs-connect-for-node-middleware/) middleware connectivity.
 
 To use, provide a JSGI application (can be application stack) to the start 
 function:
@@ -28,7 +33,7 @@ asynchronous support. For example:
     });
 
 
-File objects returned from promised-io's fs can be directly provided as body for 
+File objects returned from [promised-io's fs](http://github.com/kriszyp/promised-io) can be directly provided as body for 
 automated streaming of data to the client from the filesystem:
 
     var fs = require("promised-io/fs");
@@ -54,4 +59,6 @@ This package also includes an adapter for running Node HTTP apps on top of JSGI 
       )
     );
 
- 
+JSGI-Node is licensed under the AFL or BSD license.
+
+Authors include Kris Zyp and Jed Schmidt. 
