@@ -4,6 +4,8 @@ JSGI-Node provides an interface for running middleware [JSGI](http://wiki.common
 JSGI is an asynchronous middleware interface based on solid mature middleware design
 principles, and the asynchronous design fits perfectly with Node. JSGI uses idiomatic JavaScript,
 leveraging closures for [simple and fast](http://www.sitepen.com/blog/2010/06/11/jsgi-vs-connect-for-node-middleware/) middleware connectivity.
+There is substantial set of middleware components that can be found on the 
+[Node modules page](https://github.com/ry/node/wiki/modules#middleware).
 
 To use, provide a JSGI application (can be application stack) to the start 
 function:
