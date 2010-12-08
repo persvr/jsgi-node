@@ -61,6 +61,23 @@ This package also includes an adapter for running Node HTTP apps on top of JSGI 
       )
     );
 
+## WebSocket with JSGI
+JSGI middleware can be used to handle incoming WebSocket messages. While JSGI
+is designed for HTTP, WebSocket includes HTTP elements and JSGI's streaming capabilities
+are well-suited for socket communication. JSGI delegation can be achieved by using
+the "ws-jsgi" module in conjunction with the node-websocket-server package. 
+This "ws-jsgi" module exports a function that can be called with a socket server and
+a JSGI handler. For example:
+<pre>
+	var http = require("http").createServer(
+			require("jsgi-node").Listener(jsgiApp)
+		);
+	http.listen(80);
+	require("jsgi-node/ws-jsgi")(ws.createServer({
+		server: http
+	}), jsgiApp);
+</pre>
+
 JSGI-Node is licensed under the AFL or BSD license.
 
 Authors include Kris Zyp and Jed Schmidt. 
