@@ -1,6 +1,6 @@
 {
   "name": "jsgi",
-  "version": "0.0.1",
+  "version": "0.2.4ssl",
   "directories": { "lib": "./lib" },
   "main": "./lib/jsgi-node",
   "author": "Kris Zyp"
