@@ -1,5 +1,5 @@
 {
-  "name": "jsgi",
+  "name": "jsgi-node",
   "version": "0.2.5",
   "directories": { "lib": "./lib" },
   "main": "./lib/jsgi-node",
