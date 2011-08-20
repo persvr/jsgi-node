@@ -1,7 +1,7 @@
 {
   "name": "jsgi-node",
   "version": "0.2.5",
-  "directories": { "lib": "./lib" },
+  "directories": { "lib": "." },
   "main": "./jsgi-node",
   "description": "JSGI middleware server for NodeJS", 
   "author": "Kris Zyp",
