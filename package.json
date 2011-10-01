@@ -10,5 +10,9 @@
   		"name": "Kris Zyp",
   		"email": "kriszyp@gmail.com"
   	}
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kriszyp/jsgi-node.git"
+  }
 }
