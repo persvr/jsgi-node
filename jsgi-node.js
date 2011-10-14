@@ -209,6 +209,9 @@ function Response( response, stream ) {
 }
 
 function Listener( app ) {
+  if(typeof app != "function"){
+  	throw new Error("app must be a function");
+  }
   return function( request, response ) {
   	var connection = request.connection;
     request = new Request( request );
