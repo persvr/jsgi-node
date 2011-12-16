@@ -66,7 +66,9 @@ Request.prototype = {
       flush: function(){}
     }
   },
-  env:{},
+  get env(){
+  	return this._env || (this._env = {});
+  },
   scriptName: "",
   scheme:"http",
   get host(){
@@ -150,10 +152,9 @@ function Response( response, stream ) {
 
       return;
     }
-
     if ( !started ) {
       started = true;
-      response.writeHead( data.status, data.headers );
+      response.writeHead( data.status || 500, data.headers );
     }
 
     try {
