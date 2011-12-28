@@ -1,14 +1,36 @@
 # JSGI 0.3 Adapter for Node
 
-JSGI-Node provides an interface for running middleware [JSGI](http://wiki.commonjs.org/wiki/JSGI/Level0/A/Draft2) on Node.
+JSGI-Node provides an interface for running [JSGI](http://wiki.commonjs.org/wiki/JSGI/Level0/A/Draft2) middleware on Node.
 JSGI is an asynchronous middleware interface based on solid mature middleware design
 principles, and the asynchronous design fits perfectly with Node. JSGI uses idiomatic JavaScript,
 leveraging closures for [simple and fast](http://www.sitepen.com/blog/2010/06/11/jsgi-vs-connect-for-node-middleware/) middleware connectivity.
-There is substantial set of middleware components that can be found on the 
-[Node modules page](https://github.com/ry/node/wiki/modules#middleware).
+This project does not include any JSGI components itself, but 
+a substantial set of JSGI middleware components that are available, many can be found
+in [Pintura](https://github.com/persvr/pintura).
+
+# Installation
+
+JSGI-Node can be installed with NPM:
+
+    npm install jsgi-node
+
+# Usage
 
 To use, provide a JSGI application (can be application stack) to the start 
 function:
+
+    require("jsgi-node").start(function(request){
+      return {
+        status:200,
+        headers:{},
+        body:["Hello World!"]
+      };
+    });
+
+This adapter should conform to the JSGI 0.3 (with promises) for full 
+asynchronous support. For example, here is an echo server that asynchronously
+waits for the request and asynchonously provides it as the response:
+
 
     require("jsgi-node").start(function(request){
       return request.body.join().then(function(requestBody){
@@ -20,8 +42,8 @@ function:
       });
     });
 
-This adapter should conform to the JSGI 0.3 (with promises) for full 
-asynchronous support. For example:
+And here is an example of using a promises from another source (from [promised-io's fs](http://github.com/persvr/promised-io)) and piping them to the
+response:
 
     var fs = require("promised-io/fs");
     require("jsgi-node").start(function(request){
@@ -35,7 +57,7 @@ asynchronous support. For example:
     });
 
 
-File objects returned from [promised-io's fs](http://github.com/kriszyp/promised-io) can be directly provided as body for 
+File objects returned from [promised-io's fs](http://github.com/persvr/promised-io) can be directly provided as body for 
 automated streaming of data to the client from the filesystem:
 
     var fs = require("promised-io/fs");
@@ -62,6 +84,7 @@ This package also includes an adapter for running Node HTTP apps on top of JSGI 
     );
 
 ## WebSocket with JSGI
+
 JSGI middleware can be used to handle incoming WebSocket messages. While JSGI
 is designed for HTTP, WebSocket includes HTTP elements and JSGI's streaming capabilities
 are well-suited for socket communication. JSGI delegation can be achieved by using
@@ -73,11 +96,19 @@ a JSGI handler. For example:
 			require("jsgi-node").Listener(jsgiApp)
 		);
 	http.listen(80);
-	require("jsgi-node/ws-jsgi")(ws.createServer({
+	require("jsgi/ws-jsgi")(ws.createServer({
 		server: http
 	}), jsgiApp);
 </pre>
 
-JSGI-Node is licensed under the AFL or BSD license.
+Licensing
+--------
+
+The JSGI-Node package is an implementation of JSGI. JSGI is a standard that was 
+developed in collaboration by many developers through the forums of JackJS, 
+CommonJS, and Persevere. The implementation in this package is part of the Persevere 
+project, and therefore is licensed under the
+AFL or BSD license. The Persevere project is administered under the Dojo foundation,
+and all contributions require a Dojo CLA.
 
 Authors include Kris Zyp and Jed Schmidt. 
