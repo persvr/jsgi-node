@@ -6,28 +6,30 @@ exports.Node = function(nodeApp){
 		var endListeners = [];
 		var bodyDeferred;
 		var responseDeferred = defer();
-		nodeApp({
+		var nodeRequest = {
 			headers: request.headers,
 			httpVersionMajor: request.version[0],
 			httpVersionMinor: request.version[1],
 			addListener: function(event, callback){
-				if(event == "data"){
-					when(request.body && request.body.forEach(function(data){
-						callback(data);
-					}), function(){
-						endListeners.forEach(function(listener){
-							listener();
+				process.nextTick(function(){
+					if(event == "data"){
+						when(request.body && request.body.forEach(function(data){
+							callback(data);
+						}), function(){
+							endListeners.forEach(function(listener){
+								listener();
+							});
+							endListeners = null;
 						});
-						endListeners = null;
-					});
-				}
-				if(event == "end"){
-					if(endListeners){
-						endListeners.push(callback);
-					}else{
-						callback();
 					}
-				}
+					if(event == "end"){
+						if(endListeners){
+							endListeners.push(callback);
+						}else{
+							callback();
+						}
+					}
+				});
 				return this;
 			},
 			pause: function(){
@@ -36,7 +38,9 @@ exports.Node = function(nodeApp){
 			resume: function(){
 				
 			}
-		},
+		}
+		nodeRequest.on = nodeRequest.addListener;
+		nodeApp(nodeRequest,
 		{
 			writeHead: function(status, headers){
 				var write;
