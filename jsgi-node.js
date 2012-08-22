@@ -197,11 +197,14 @@ function Response( response, stream ) {
       }
       try{
       	// if it is not too late, set the status
-      	response.writeHead(500, {});
+      	if(!response.statusCode){
+      	  response.writeHead(500, {});
+      	}
       }catch(e2){}
       try{
 	    response.write( "Error: " + e.stack );
 	    response.end();
+    	console.log("error",e);
       }catch(e3){
       	sys.puts(e3.stack);
       }
