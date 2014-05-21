@@ -160,6 +160,7 @@ function Response( response, stream ) {
     try {
       if ( typeof data.body === "string" ) {
         response.write(data.body);
+        response.end();
       }
       else if ( typeof data.body.forEach !== "function" ) {
         throw new Error("The body does not have a forEach function");
