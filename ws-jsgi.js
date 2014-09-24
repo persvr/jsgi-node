@@ -3,25 +3,24 @@ var when = require("./promise").when,
 
 
 module.exports = function(socketServer, jsgiApp){
-	socketServer.on("connection", function(connection){
-		connection._req.connection.setTimeout(0);
+	socketServer.on("connection", function(socket){
+		var req = socket.upgradeReq;
+		req.setTimeout(0);
 		function Request(){}
-		Request.prototype = new NodeRequest(connection._req);
+		Request.prototype = new NodeRequest(req);
 		function Headers(){}
 		Headers.prototype = Request.prototype.headers;
-		connection.on("message", function(data){
+		socket.on("message", function(data){
 			var request = new Request();
 			request.body = [data];
 			request.headers = new Headers();
 			when(jsgiApp(request), function(response){
 				when(response.body, function(body){
 					body.forEach(function(data){
-						connection.send(data);
+						socket.send(data);
 					});
 				})
 			});
-		});
-		connection.on("close", function(){
 		});
 	});
 };
