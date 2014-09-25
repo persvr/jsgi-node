@@ -16,10 +16,20 @@ module.exports = function(socketServer, jsgiApp){
 			request.headers = new Headers();
 			when(jsgiApp(request), function(response){
 				when(response.body, function(body){
-					body.forEach(function(data){
-						socket.send(data);
+					var chunks = [],
+						done = false;
+					when(body.forEach(function (chunk) {
+						chunks.push(chunk);
+					}), function () {
+						done = true;
 					});
-				})
+					socket.stream(function (err, send) {
+						if (!err && chunks.length) {
+							send(chunks.join(''), done);
+							chunks = [];
+						}
+					});
+				});
 			});
 		});
 	});
