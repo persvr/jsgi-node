@@ -37,6 +37,7 @@ var
 function Request( request ) {
   var url = request.url;
   var questionIndex = url.indexOf("?");
+  this._env = {};
   this.method = request.method;
   this.nodeRequest = request;
   this.headers = request.headers;
