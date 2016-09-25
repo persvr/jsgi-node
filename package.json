@@ -1,6 +1,6 @@
 {
   "name": "jsgi",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "directories": { "lib": "." },
   "main": "./jsgi-node",
   "description": "JSGI middleware server for NodeJS", 
